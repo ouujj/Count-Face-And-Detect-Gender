@@ -3,6 +3,7 @@ from scipy.spatial import distance as dist
 from collections import OrderedDict
 import numpy as np
 from SendToFirebase import update_firebase
+from SavetoSQLlite import sqllitedb
 
 class CentroidTracker:
 	def __init__(self, maxDisappeared=50, maxDistance=50):
@@ -24,6 +25,8 @@ class CentroidTracker:
 		# an object -- if the distance is larger than this maximum
 		# distance we'll start to mark the object as "disappeared"
 		self.maxDistance = maxDistance
+		
+		self.db= sqllitedb()
 
 	def register(self, centroid ,gd):
 		# when registering an object we use the next available object
@@ -33,7 +36,14 @@ class CentroidTracker:
 		self.disappeared[self.nextObjectID] = 0
 		
 		if(self.nextObjectID != 0):
+		#update data to friebase
+			
 			#update_firebase(self.nextObjectID,gd)
+			
+		#save to SQLlite Database 
+			self.db.insertDB(self.nextObjectID,gd)
+		
+			
 			if(gd == 'Man'):
 				self.number_of_man +=1
 			else:
