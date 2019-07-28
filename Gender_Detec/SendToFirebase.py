@@ -7,7 +7,7 @@ import  urllib, http.client
 import json
 import os 
 
-firebaseURL = 'https://peoples-and-gender-count.firebaseio.com/'
+firebaseURL = 'YOUR FIREBASE URL'
 
 firebase = firebase.FirebaseApplication(firebaseURL, None)
 
